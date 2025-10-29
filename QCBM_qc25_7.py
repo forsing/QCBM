@@ -25,8 +25,14 @@ np.random.seed(SEED)
 random.seed(SEED)
 algorithm_globals.random_seed = SEED
 
+
+"""
+svih 4502 izvlacenja Loto 7/39 u Srbiji
+30.07.1985.- 28.10.2025.
+"""
+
 # 1. Učitaj loto podatke
-df = pd.read_csv("/data/loto7_4500_k84.csv", header=None)
+df = pd.read_csv("/data/loto7_4502_k85.csv", header=None)
 
 
 ###################################
@@ -528,7 +534,7 @@ print()
 4500
 4500
 === Predviđena sledeća kombinacija (7) ===
-Kombinacija: [12, 4, 16, 20, 13, 38, 11], Verovatnoća: 0.0461
+Kombinacija: [12, 4, x, x, x, 38, 11], Verovatnoća: 0.0461
 """
 
 
@@ -546,4 +552,23 @@ print()
 """
 
 """
+
+
+
+
+
+"""
+=== Qiskit Version Table ===
+Software                       Version        
+---------------------------------------------
+qiskit                         1.4.4          
+qiskit_machine_learning        0.8.3          
+
+=== System Information ===
+Python version                 3.11.13        
+OS                             Darwin         
+Time                           Tue Sep 09 18:11:49 2025 CEST
+"""
+
+
 

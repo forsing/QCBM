@@ -1,3 +1,5 @@
+# QCBM (Quantum Circuit Born Machine)
+
 import numpy as np
 import pandas as pd
 
@@ -24,7 +26,7 @@ random.seed(SEED)
 algorithm_globals.random_seed = SEED
 
 # 1. Učitaj loto podatke
-df = pd.read_csv("/Users/milan/Desktop/GHQ/data/loto7_4500_k84.csv", header=None)
+df = pd.read_csv("/data/loto7_4500_k84.csv", header=None)
 
 
 ###################################
@@ -36,12 +38,6 @@ print()
 """
 Prvih 5 ucitanih kombinacija iz CSV fajla:
 
-   0   1   2   3   4  5
-0  8  10  15  21  31  6
-1  7  16  19  25  31  2
-2  1   7  18  25  28  7
-3  6   7  12  19  22  2
-4  8  25  29  33  34  3
 """
 
 print()
@@ -52,12 +48,6 @@ print()
 """
 Zadnjih 5 ucitanih kombinacija iz CSV fajla:
 
-    0   1   2   3   4  5
-81  2   6  15  17  20  3
-82  3   5  20  28  35  9
-83  1   7  11  28  31  4
-84  8  11  16  22  27  6
-85  7   9  13  14  28  2
 """
 ####################################
 
@@ -84,7 +74,7 @@ print()
 print(f"Učitano kombinacija: {df.shape[0]}, Broj pozicija: {df.shape[1]}")
 print()
 """
-Učitano kombinacija: 86, Broj pozicija: 6
+Učitano kombinacija: 4500, Broj pozicija: 7
 """
 
 
@@ -96,12 +86,7 @@ print()
 """
 Prvih 5 mapiranih kombinacija:
 
-   0   1   2   3   4  5
-0  7   8  12  17  26  5
-1  6  14  16  21  26  1
-2  0   5  15  21  23  6
-3  5   5   9  15  17  1
-4  7  23  26  29  29  2
+
 """
 
 print()
@@ -112,12 +97,7 @@ print()
 """
 Zadnjih 5 mapiranih kombinacija:
 
-    0  1   2   3   4  5
-81  1  4  12  13  15  2
-82  2  3  17  24  30  8
-83  0  5   8  24  26  3
-84  7  9  13  18  22  5
-85  6  7  10  10  23  1
+
 """
 
 
@@ -212,10 +192,6 @@ def full_qcbm(params_list, values):
 
 
 
-# Test primer: enkoduj kombinaciju [38, 8, 6, 10, 34, 22, 7]
-# test_values = [12, 11, 38, 14, 35, 4, 21]
-
-
 
 np.random.seed(39)
 # params_list = [np.random.uniform(0, 2*np.pi, num_layers * num_qubits) for _ in range(num_positions)]
@@ -282,26 +258,26 @@ Kompaktni prikaz kvantnog kola (text):
 """
 # Sačuvaj kao PDF
 img1 = full_circuit.draw('latex')
-img1.save("/Users/milan/Desktop/GHQ/data/qc30_5_1.pdf")
+img1.save("/data/qc30_5_1.pdf")
 
 
 # Sačuvaj kao sliku u latex formatu jpg
 img2 = full_circuit.draw('latex')
-img2.save("/Users/milan/Desktop/GHQ/data/qc30_5_2.jpg")
+img2.save("/data/qc30_5_2.jpg")
 
 
 # Sačuvaj kao sliku u latex formatu png
 img3 = full_circuit.draw('latex')
-img3.save("/Users/milan/Desktop/GHQ/data/qc30_5_3.png")
+img3.save("/data/qc30_5_3.png")
 
 
 # Sačuvaj kao sliku u matplotlib formatu jpg
 img4 = full_circuit.draw('mpl', fold=40)
-img4.savefig("/Users/milan/Desktop/GHQ/data/qc30_5_4.jpg")
+img4.savefig("/data/qc30_5_4.jpg")
 
 # Sačuvaj kao sliku u matplotlib formatu png
 img5 = full_circuit.draw('mpl', fold=40)
-img5.savefig("/Users/milan/Desktop/GHQ/data/qc30_5_5.png")
+img5.savefig("/data/qc30_5_5.png")
 """
 
 
@@ -342,8 +318,8 @@ from qiskit import QuantumCircuit
 # 2. Koristimo samo zadnjih N=1000 za test
 # =========================
 
-# Uzmi poslednjih N izvlačenja iz CSV
-N = 4500  # možeš menjati N
+# Uzmi svih 4500 izvlacenja iz CSV fajla
+N = 4500 # možeš menjati N
 df_tail = df.tail(N).reset_index(drop=True)
 X_tail = df_tail.iloc[:, :-1].values  # prvih 5 brojeva
 
@@ -548,6 +524,13 @@ print()
 print("\n=== Predviđena sledeća kombinacija (7) ===")
 print("Kombinacija:", predicted_combo, f"(p={counts[most_prob_bitstring]:.4f})")
 print()
+"""
+4500
+4500
+=== Predviđena sledeća kombinacija (7) ===
+Kombinacija: [12, 4, 16, 20, 13, 38, 11], Verovatnoća: 0.0461
+"""
+
 
 
 
@@ -561,8 +544,6 @@ for bitstr, prob in sorted_counts[:5]:
     print(f"Kombinacija: {combo}, Verovatnoća: {prob:.4f}")
 print()
 """
-4500
-4500
-=== Predviđena sledeća kombinacija (7) ===
-Kombinacija: [12, 4, 16, 20, 13, 38, 11], Verovatnoća: 0.0461
+
 """
+

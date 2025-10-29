@@ -26,7 +26,7 @@ random.seed(SEED)
 algorithm_globals.random_seed = SEED
 
 # 1. Učitaj loto podatke
-df = pd.read_csv("/Users/milan/Desktop/GHQ/data/loto5_89_k80.csv", header=None)
+df = pd.read_csv("/data/loto5_89_k80.csv", header=None)
 
 
 ###################################
@@ -54,12 +54,7 @@ print()
 """
 Zadnjih 5 ucitanih kombinacija iz CSV fajla:
 
-    0   1   2   3   4  5
-81  2   6  15  17  20  3
-82  3   5  20  28  35  9
-83  1   7  11  28  31  4
-84  8  11  16  22  27  6
-85  7   9  13  14  28  2
+
 """
 ####################################
 
@@ -114,12 +109,7 @@ print()
 """
 Zadnjih 5 mapiranih kombinacija:
 
-    0  1   2   3   4  5
-81  1  4  12  13  15  2
-82  2  3  17  24  30  8
-83  0  5   8  24  26  3
-84  7  9  13  18  22  5
-85  6  7  10  10  23  1
+
 """
 
 
@@ -196,7 +186,7 @@ def full_qcbm(params_list, values):
 
     return qc
 
-# Test primer: enkoduj kombinaciju [13, 5, 7, 20, 23, 8]
+
 test_values = [27,16,35,34,12,4]
 np.random.seed(35)
 params_list = [np.random.uniform(0, 2*np.pi, num_layers * num_qubits) for _ in range(num_positions)]
@@ -248,26 +238,26 @@ circuit_drawer(full_circuit, output='latex', style={"backgroundcolor": "#EEEEEE"
 """
 # Sačuvaj kao PDF
 img1 = full_circuit.draw('latex')
-img1.save("/Users/milan/Desktop/GHQ/data/qc30_5_1.pdf")
+img1.save("/data/qc30_5_1.pdf")
 
 
 # Sačuvaj kao sliku u latex formatu jpg
 img2 = full_circuit.draw('latex')
-img2.save("/Users/milan/Desktop/GHQ/data/qc30_5_2.jpg")
+img2.save("/data/qc30_5_2.jpg")
 
 
 # Sačuvaj kao sliku u latex formatu png
 img3 = full_circuit.draw('latex')
-img3.save("/Users/milan/Desktop/GHQ/data/qc30_5_3.png")
+img3.save("/data/qc30_5_3.png")
 
 
 # Sačuvaj kao sliku u matplotlib formatu jpg
 img4 = full_circuit.draw('mpl', fold=40)
-img4.savefig("/Users/milan/Desktop/GHQ/data/qc30_5_4.jpg")
+img4.savefig("/data/qc30_5_4.jpg")
 
 # Sačuvaj kao sliku u matplotlib formatu png
 img5 = full_circuit.draw('mpl', fold=40)
-img5.savefig("/Users/milan/Desktop/GHQ/data/qc30_5_5.png")
+img5.savefig("/data/qc30_5_5.png")
 """
 
 
@@ -275,7 +265,7 @@ img5.savefig("/Users/milan/Desktop/GHQ/data/qc30_5_5.png")
 
 # Sačuvaj kao sliku u matplotlib formatu jpg
 img4 = full_circuit.draw('mpl', fold=40)
-img4.savefig("/Users/milan/Desktop/GHQ/KvantniRegresor/3QCBM/QCBM_qc25_5_4.jpg")
+img4.savefig("/KvantniRegresor/3QCBM/QCBM_qc25_5_4.jpg")
 
 
 
@@ -305,7 +295,7 @@ from qiskit import QuantumCircuit
 
 
 # =========================
-# 2. Koristimo samo zadnjih N=1000 za test
+# 2. Koristimo svih 89 izvlacenja
 # =========================
 N = 89
 df = df.tail(N).reset_index(drop=True)

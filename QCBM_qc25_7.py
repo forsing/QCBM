@@ -80,7 +80,7 @@ print()
 print(f"Učitano kombinacija: {df.shape[0]}, Broj pozicija: {df.shape[1]}")
 print()
 """
-Učitano kombinacija: 4500, Broj pozicija: 7
+Učitano kombinacija: 4502, Broj pozicija: 7
 """
 
 
@@ -200,15 +200,12 @@ def full_qcbm(params_list, values):
 
 
 np.random.seed(39)
-# params_list = [np.random.uniform(0, 2*np.pi, num_layers * num_qubits) for _ in range(num_positions)]
-# --- Priprema params_list i test_values u skladu sa novim brojevima ---
-# osiguraj da params_list ima tacno num_positions elemenata, svaki duzine num_layers*num_qubits
+
 params_list = [np.random.uniform(0, 2*np.pi, num_layers * num_qubits) for _ in range(num_positions)]
 
 
 
 
-# ako test_values ima vise elemenata, uzimamo samo prvih num_positions
 """
 if len(test_values) < num_positions:
     raise ValueError(f"test_values mora imati najmanje {num_positions} elemenata; trenutno ima {len(test_values)}.")
@@ -216,10 +213,6 @@ test_values_trim = test_values[:num_positions]
 """
 
 
-# Generiši QCBM za svih 6 pozicija
-# full_circuit = full_qcbm(params_list, test_values)
-# Generiši QCBM
-# full_circuit = full_qcbm(params_list, test_values_trim)
 
 
 # Prikaz celog kruga u 'mpl' formatu
@@ -231,8 +224,6 @@ test_values_trim = test_values[:num_positions]
 # plt.show()
 
 
-# The only valid choices are 
-# text, latex, latex_source, and mpl
 
 
 # Kompaktni prikaz kola
@@ -254,38 +245,31 @@ Kompaktni prikaz kvantnog kola (text):
 # plt.show()
 
 
-# import tinytex
-# pip install tinycio
-# pip install torchvision
-# tinytex.install()
-
 
 
 """
 # Sačuvaj kao PDF
 img1 = full_circuit.draw('latex')
-img1.save("/data/qc30_5_1.pdf")
+img1.save("/data/qc25_5_1.pdf")
 
 
 # Sačuvaj kao sliku u latex formatu jpg
 img2 = full_circuit.draw('latex')
-img2.save("/data/qc30_5_2.jpg")
+img2.save("/data/qc25_5_2.jpg")
 
 
 # Sačuvaj kao sliku u latex formatu png
 img3 = full_circuit.draw('latex')
-img3.save("/data/qc30_5_3.png")
+img3.save("/data/qc25_5_3.png")
 
 
 # Sačuvaj kao sliku u matplotlib formatu jpg
 img4 = full_circuit.draw('mpl', fold=40)
-img4.savefig("/data/qc30_5_4.jpg")
+img4.savefig("/data/qc25_5_4.jpg")
 
 # Sačuvaj kao sliku u matplotlib formatu png
 img5 = full_circuit.draw('mpl', fold=40)
-img5.savefig("/data/qc30_5_5.png")
-"""
-
+img5.savefig("/data/qc25_5_5.png")
 
 
 
@@ -293,7 +277,7 @@ img5.savefig("/data/qc30_5_5.png")
 # img4 = full_qcbm.draw('mpl', fold=40)
 # img4.savefig("/Users/milan/Desktop/GHQ/KvantniRegresor/3QCBM/QCBM_qc25_7_5.jpg")
 
-
+"""
 
 ###############################################
 
@@ -324,8 +308,8 @@ from qiskit import QuantumCircuit
 # 2. Koristimo samo zadnjih N=1000 za test
 # =========================
 
-# Uzmi svih 4500 izvlacenja iz CSV fajla
-N = 4500 # možeš menjati N
+# Uzmi svih 450 izvlacenja iz CSV fajla
+N = 4502 # možeš menjati N
 df_tail = df.tail(N).reset_index(drop=True)
 X_tail = df_tail.iloc[:, :-1].values  # prvih 5 brojeva
 
@@ -349,7 +333,7 @@ for pos in range(num_positions):
 
 
 X = df.iloc[:, :-1].values  # prvih 5 brojeva
-y_full = df.values          # svi 6 brojeva (5+1)
+y_full = df.values          # svi 7 brojeva (5+2)
 
 
 
@@ -360,7 +344,7 @@ print(X_scaled.shape[0])
 print()
 """
 X_scaled.shape[0]
-87
+4502
 """
 
 print()
@@ -369,7 +353,7 @@ print(len(X_scaled))
 print()
 """
 len(X_scaled)
-87
+4502
 """
 
 
@@ -380,8 +364,7 @@ predicted_combination = []
 
 sampler = Sampler()
 backend = AerSimulator()
-# num_qubits = X_scaled.shape[1] * 3  
-# malo veća reprezentacija prostora
+
 
 # kreiranje QCBM ansatza
 ansatz = TwoLocal(num_qubits=num_qubits,
@@ -432,18 +415,6 @@ pbar.close()
 
 
 
-# generisanje uzoraka
-# final_circ = QuantumCircuit(num_qubits, num_qubits)  
-# dodaj klasične bitove
-
-# full_qcbm.compose(ansatz)
-# final_circ.measure(range(num_qubits), range(num_qubits))  # merenja
-
-# full_circuit.compose(ansatz.assign_parameters(theta), inplace=True)
-# full_circuit.measure(range(num_qubits), range(num_qubits))  # merenja
-
-
-
 
 
 # Test vrednosti: uzmi srednju vrednost poslednjih N izvlačenja
@@ -456,11 +427,6 @@ full_circuit = full_qcbm(params_list, test_values)
 job = sampler.run([full_circuit], shots=1000000)
 result = job.result()
 counts = result.quasi_dists[0]
-
-
-
-
-
 
 
 
@@ -531,8 +497,8 @@ print("\n=== Predviđena sledeća kombinacija (7) ===")
 print("Kombinacija:", predicted_combo, f"(p={counts[most_prob_bitstring]:.4f})")
 print()
 """
-4500
-4500
+4502
+4502
 === Predviđena sledeća kombinacija (7) ===
 Kombinacija: [12, 4, x, x, x, 38, 11], Verovatnoća: 0.0461
 """

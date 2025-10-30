@@ -81,7 +81,7 @@ print()
 print(f"Učitano kombinacija: {df.shape[0]}, Broj pozicija: {df.shape[1]}")
 print()
 """
-Učitano kombinacija: 86, Broj pozicija: 6
+Učitano kombinacija: 89, Broj pozicija: 6
 """
 
 
@@ -219,7 +219,6 @@ Kompaktni prikaz kvantnog kola (text):
 """
 
 
-# display(full_circuit.draw())     
 display(full_circuit.draw("mpl"))
 # plt.show()
 
@@ -228,37 +227,31 @@ circuit_drawer(full_circuit, output='latex', style={"backgroundcolor": "#EEEEEE"
 # plt.show()
 
 
-# import tinytex
-# pip install tinycio
-# pip install torchvision
-# tinytex.install()
-
-
 
 """
 # Sačuvaj kao PDF
 img1 = full_circuit.draw('latex')
-img1.save("/data/qc30_5_1.pdf")
+img1.save("/data/qc25_5_1.pdf")
 
 
 # Sačuvaj kao sliku u latex formatu jpg
 img2 = full_circuit.draw('latex')
-img2.save("/data/qc30_5_2.jpg")
+img2.save("/data/qc25_5_2.jpg")
 
 
 # Sačuvaj kao sliku u latex formatu png
 img3 = full_circuit.draw('latex')
-img3.save("/data/qc30_5_3.png")
+img3.save("/data/qc25_5_3.png")
 
 
 # Sačuvaj kao sliku u matplotlib formatu jpg
 img4 = full_circuit.draw('mpl', fold=40)
-img4.savefig("/data/qc30_5_4.jpg")
+img4.savefig("/data/qc25_5_4.jpg")
 
 # Sačuvaj kao sliku u matplotlib formatu png
 img5 = full_circuit.draw('mpl', fold=40)
-img5.savefig("/data/qc30_5_5.png")
-"""
+img5.savefig("/data/qc25_5_5.png")
+
 
 
 
@@ -267,7 +260,7 @@ img5.savefig("/data/qc30_5_5.png")
 img4 = full_circuit.draw('mpl', fold=40)
 img4.savefig("/KvantniRegresor/3QCBM/QCBM_qc25_5_4.jpg")
 
-
+"""
 
 ###############################################
 
@@ -320,7 +313,7 @@ print(X_scaled.shape[0])
 print()
 """
 X_scaled.shape[0]
-87
+89
 """
 
 print()
@@ -329,7 +322,7 @@ print(len(X_scaled))
 print()
 """
 len(X_scaled)
-87
+89
 """
 
 
@@ -340,8 +333,6 @@ predicted_combination = []
 
 sampler = Sampler()
 backend = AerSimulator()
-# num_qubits = X_scaled.shape[1] * 3  
-# malo veća reprezentacija prostora
 
 # kreiranje QCBM ansatza
 ansatz = TwoLocal(num_qubits=num_qubits,
@@ -392,20 +383,6 @@ pbar.close()
 
 
 
-# generisanje uzoraka
-# final_circ = QuantumCircuit(num_qubits, num_qubits)  
-# dodaj klasične bitove
-
-full_circuit.compose(ansatz)
-# final_circ.measure(range(num_qubits), range(num_qubits))  # merenja
-
-# full_circuit.compose(ansatz.assign_parameters(theta), inplace=True)
-# full_circuit.measure(range(num_qubits), range(num_qubits))  # merenja
-
-
-
-
-#job = sampler.run([final_circ], shots=5000)
 job = sampler.run([full_circuit], shots=100)
 
 result = job.result()
@@ -427,10 +404,9 @@ def bitstring_to_loto(bitstring_int):
 
 
 
-# Pretpostavljam da si već generisao counts iz Sampler-a i uzeo najverovatniji bitstring
+# Pretpostavljam da je već generisan counts iz Sampler-a i uzet najverovatniji bitstring
 most_prob_bitstring = max(counts, key=counts.get)
 predicted_combo = bitstring_to_loto(most_prob_bitstring)
-# predicted_combination.append(predicted_combo)
 
 print()
 print("\n=== Predviđena sledeća kombinacija (5+1) ===")
@@ -449,5 +425,5 @@ print()
 89
 89
 === Predviđena sledeća kombinacija (5+1) ===
-Kombinacija: [1, 4, 4, 10, 14, 10] (p=0.0200)
+Kombinacija: [1, 4, x, x, 14, 10] (p=0.0200)
 """
